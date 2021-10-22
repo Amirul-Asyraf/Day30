@@ -31,7 +31,7 @@
                     <label for="pdpaTnc" class="form_app_lbl">I hereby acknowledge that I have read, understand and agree to the <a data-toggle="modal" data-target="#termsofuseprivacypolicy" class="pdpa_link">PDPA terms & conditions</a>.</label>
                 </div>
                 <div class="form_app_submit_container">
-                    <button type="button" class="form_app_submit btn_blue" onclick="location.href='mobileno.html';">Next <span class="next_arrow_icon"><img src="dist/images/svg/arrow_right_white.svg" alt=""></span></button>
+                    <button type="button" class="form_app_submit btn_blue" onclick="location.href='mobileno.php';">Next <span class="next_arrow_icon"><img src="dist/images/svg/arrow_right_white.svg" alt=""></span></button>
                 </div>
             </form>
         </div>
