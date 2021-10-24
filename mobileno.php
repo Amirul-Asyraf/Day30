@@ -1,3 +1,4 @@
+<?php include 'db.php';?>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en">
 
@@ -10,15 +11,12 @@
     <meta name="format-detection" content="telephone=no" />
 
     <link rel="stylesheet" href="dist/css/bootstrap.min.css">
-  <link rel="stylesheet" href="dist/css/intlTelInput.css">
+    <link rel="stylesheet" href="dist/css/intlTelInput.css">
     <link rel="stylesheet" type="text/css" href="dist/css/style.css?v=1.0.2" />
-
-
 
 </head>
 
 <body>
-
     <div class="app__container">
         <div class="app__wrapper">
             <div class="app__logo"><img src="dist/images/svg/cvd_logo.svg" alt="" /></div>
@@ -26,10 +24,10 @@
             <div class="app__desc app__desc_mobileno">
                 <p class="app__desc_1">Please enter your mobile number in full, <span class="app__name_newln">so that a verification code can be successfully sent.</span></p>
             </div>
-            <form>
+            <form method="post">
                 <input id="phone" name="phone" type="tel">
                 <div class="form_app_submit_container">
-                    <button type="button" class="form_app_submit btn_blue" onclick="location.href='tacno.php';">Verify <span class="next_arrow_icon"><img src="dist/images/svg/arrow_right_white.svg" alt=""></span></button>
+                    <button type="submit" class="form_app_submit btn_blue" name='request' onclick="location.href='tacno.php';">Verify <span class="next_arrow_icon"><img src="dist/images/svg/arrow_right_white.svg" alt=""></span></button>
                 </div>
             </form>
         </div>
@@ -68,6 +66,36 @@
            utilsScript: "dist/js/utils.js",
         });
     </script>
+
+    <?php
+        if(isset($_POST['request'])) {
+            $phone = $_POST['phone'];
+            $cust_name = $_SESSION['name'];
+
+            $sql_2 = "SELECT customers_id FROM customers WHERE name='$cust_name' ";
+            $result = $conn->query($sql_2);
+
+            if ($result->num_rows > 0) {
+                // output data of each row
+                while($row = $result->fetch_assoc()) {
+                    $cust_id = $row["customers_id"];
+                }
+            } else {
+                echo "0 results";
+            }
+
+            $sql = "INSERT INTO tac(customers_id, phone, created_at) VALUES ('$cust_id', '$phone', NOW()) ";
+
+            if ($phone != null) {
+                if ($conn->query($sql) === TRUE) {
+                    echo "New record created successfully";
+                } else {
+                    echo "Error: " . $sql . "<br>" . $conn->error;
+                }
+            }
+            header("location: tacno.php");
+        }
+    ?>
 </body>
 
 </html>

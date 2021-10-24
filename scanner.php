@@ -1,3 +1,5 @@
+<?php include 'db.php';?>
+
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en">
 
@@ -14,7 +16,9 @@
     <link rel="stylesheet" href="dist/css/bootstrap-datepicker.min.css">
     <link rel="stylesheet" type="text/css" href="dist/css/style.css?v=1.0.5" />
 
-
+    <?php
+        $cust_name = $_SESSION['name'];
+    ?>
 
 </head>
 
@@ -133,12 +137,37 @@
                                 <div class="card_profile_content">
                                     <div class="form_group form_name">
                                         <label class="form_lbl">Name</label>
-                                        <div class="form_val">John Doe</div>
+                                        <div class="form_val">
+                                            <?php 
+                                                $sql = "SELECT name FROM customers WHERE name='$cust_name' ";
+
+                                                $result = $conn->query($sql);
+                                            
+                                                $row = $result->fetch_assoc();
+                                            
+                                                echo $row['name'];
+                                            ?>
+                                        </div>
                                         <a href="#" class="edit_profile_link">Edit</a>
                                     </div>
                                     <div class="form_group form_mobileno">
                                         <label class="form_lbl">Mobile Number</label>
-                                        <div class="form_val">012-3456789</div>
+                                        <div class="form_val">
+                                            <?php
+                                                $sql = "SELECT customers_id FROM customers WHERE name='$cust_name' ";
+                                                $result = $conn->query($sql);
+                                                                                
+                                                $row = $result->fetch_assoc();
+    
+                                                $cust_id = $row['customers_id'];
+    
+                                                $sql = "SELECT phone FROM tac WHERE customers_id='$cust_id' ";
+                                                $result = $conn->query($sql);
+                                                
+                                                $row = $result->fetch_assoc();
+                                                echo $row['phone'];
+                                            ?>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -148,12 +177,42 @@
                                 <a href="#" class="cancel_btn cancel_profile"><img src="dist/images/svg/cancel_blue.svg" alt=""/></a>
                                 <div class="card_profile_content">
                                     <div class="form_group form_name">
-                                        <label class="form_lbl">Name</label>
-                                        <input type="text" class="form_txt_sm" value="John Doe">
+                                        <form method="post">
+                                            <label class="form_lbl">Name</label>
+                                            <input type="text" class="form_txt_sm" name="new-name" value="<?php echo $cust_name;?>">
+                                        </form>
+
+                                        <?php
+                                            // $sql = "SELECT customers_id FROM customers WHERE name='$cust_name' ";
+                                            // $result = $conn->query($sql);
+                                                                            
+                                            // $row = $result->fetch_assoc();
+
+                                            // $cust_id = $row['customers_id'];
+
+                                            // $new_name = $_POST['new-name'];
+                                            // $sql = "UPDATE customers SET name = '$new_name' WHERE customers_id = '$cust_id' ";
+                                            // $result = $conn->query($sql);
+                                        ?>
                                     </div>
                                     <div class="form_group form_mobileno">
                                         <label class="form_lbl">Mobile Number</label>
-                                        <div class="form_val">012-3456789</div>
+                                        <div class="form_val">
+                                            <?php
+                                                    $sql = "SELECT customers_id FROM customers WHERE name='$cust_name' ";
+                                                    $result = $conn->query($sql);
+                                                                                    
+                                                    $row = $result->fetch_assoc();
+        
+                                                    $cust_id = $row['customers_id'];
+        
+                                                    $sql = "SELECT phone FROM tac WHERE customers_id='$cust_id' ";
+                                                    $result = $conn->query($sql);
+                                                    
+                                                    $row = $result->fetch_assoc();
+                                                    echo $row['phone'];
+                                            ?>
+                                        </div>
                                     </div>
                                 </div>
                                 <button type="button" class="form_app_submit submit_profile btn_orange">Save</button>
@@ -168,11 +227,36 @@
                             <div class="info_top_left">
                                 <div class="form_group form_name">
                                     <label class="form_lbl">Name</label>
-                                    <div class="form_val">John Doe</div>
+                                    <div class="form_val">
+                                        <?php 
+                                            $sql = "SELECT name FROM customers WHERE name='$cust_name' ";
+
+                                            $result = $conn->query($sql);
+                                        
+                                            $row = $result->fetch_assoc();
+                                        
+                                            echo $row['name'];
+                                        ?>
+                                    </div>
                                 </div>
                                 <div class="form_group form_mobileno">
                                     <label class="form_lbl">Mobile Number</label>
-                                    <div class="form_val">012-3456789</div>
+                                    <div class="form_val">
+                                        <?php
+                                            $sql = "SELECT customers_id FROM customers WHERE name='$cust_name' ";
+                                            $result = $conn->query($sql);
+                                                                            
+                                            $row = $result->fetch_assoc();
+
+                                            $cust_id = $row['customers_id'];
+
+                                            $sql = "SELECT phone FROM tac WHERE customers_id='$cust_id' ";
+                                            $result = $conn->query($sql);
+                                            
+                                            $row = $result->fetch_assoc();
+                                            echo $row['phone'];
+                                        ?>
+                                    </div>
                                 </div>
                             </div>
                             <div class="info_top_right">
@@ -604,7 +688,21 @@
         
     </script>
 
+    <?php
+        // $cust_name = $_SESSION['name'];
 
+        // $sql = "SELECT name FROM customers WHERE name='$cust_name' ";
+        // $result = $conn->query($sql);
+
+        // if ($result->num_rows > 0) {
+        //     // output data of each row
+        //     while($row = $result->fetch_assoc()) {
+        //         echo $row['name'];
+        //     }
+        // } else {
+        //     echo "0 results";
+        // }
+    ?>
 </body>
 
 </html>

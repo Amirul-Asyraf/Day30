@@ -1,3 +1,4 @@
+<?php include 'db.php';?>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en">
 
@@ -11,9 +12,6 @@
 
     <link rel="stylesheet" href="dist/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="dist/css/style.css?v=1.0.2" />
-
-
-
 </head>
 
 <body>
@@ -24,14 +22,33 @@
             <div class="app__desc app__desc_name">
                 <p class="app__desc_1">We will collect just two details about you. Let's start with your name!</p>
             </div>
-            <form>
-                <input type="text" class="form_app_text" placeholder="Name" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Name'">
+            <form method="post">
+                <input type="text" class="form_app_text" placeholder="Name" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Name' name='name'" name='name'>
                 <div class="form_app_checkbox_container">
                     <input type="checkbox" name="checkbox" class="form_app_checkbox" id="pdpaTnc">
                     <label for="pdpaTnc" class="form_app_lbl">I hereby acknowledge that I have read, understand and agree to the <a data-toggle="modal" data-target="#termsofuseprivacypolicy" class="pdpa_link">PDPA terms & conditions</a>.</label>
                 </div>
+
+                <?php
+                    if(isset($_POST['next'])) {
+                        $name = $_POST['name'];
+                
+                        $sql = "INSERT INTO customers(name, status, date_created) VALUES ('$name', '1', NOW()) ";
+
+                        if ($name != null) {
+                            if ($conn->query($sql) === TRUE) {
+                                // echo "New record created successfully";
+                                $_SESSION['name'] = $name;
+                            } else {
+                                echo "Error: " . $sql . "<br>" . $conn->error;
+                            }
+                        }
+                        header("location: mobileno.php");
+                    }
+                ?>
+                
                 <div class="form_app_submit_container">
-                    <button type="button" class="form_app_submit btn_blue" onclick="location.href='mobileno.php';">Next <span class="next_arrow_icon"><img src="dist/images/svg/arrow_right_white.svg" alt=""></span></button>
+                    <button type="submit" class="form_app_submit btn_blue" name='next' onclick="location.href='mobileno.php';">Next <span class="next_arrow_icon"><img src="dist/images/svg/arrow_right_white.svg" alt=""></span></button>
                 </div>
             </form>
         </div>
@@ -82,7 +99,6 @@
     <script src="dist/js/popper.min.js"></script>
     <script src="dist/js/bootstrap.min.js"></script>
     <script src="dist/js/app.js"></script>
-
 
 </body>
 
