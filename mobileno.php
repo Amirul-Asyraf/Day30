@@ -26,6 +26,11 @@
             </div>
             <form method="post">
                 <input id="phone" name="phone" type="tel">
+
+                <?php
+                    require './controller/customers.cont.php';
+                ?>
+
                 <div class="form_app_submit_container">
                     <button type="submit" class="form_app_submit btn_blue" name='request' onclick="location.href='tacno.php';">Verify <span class="next_arrow_icon"><img src="dist/images/svg/arrow_right_white.svg" alt=""></span></button>
                 </div>
@@ -67,35 +72,7 @@
         });
     </script>
 
-    <?php
-        if(isset($_POST['request'])) {
-            $phone = $_POST['phone'];
-            $cust_name = $_SESSION['name'];
-
-            $sql_2 = "SELECT customers_id FROM customers WHERE name='$cust_name' ";
-            $result = $conn->query($sql_2);
-
-            if ($result->num_rows > 0) {
-                // output data of each row
-                while($row = $result->fetch_assoc()) {
-                    $cust_id = $row["customers_id"];
-                }
-            } else {
-                echo "0 results";
-            }
-
-            $sql = "INSERT INTO tac(customers_id, phone, created_at) VALUES ('$cust_id', '$phone', NOW()) ";
-
-            if ($phone != null) {
-                if ($conn->query($sql) === TRUE) {
-                    echo "New record created successfully";
-                } else {
-                    echo "Error: " . $sql . "<br>" . $conn->error;
-                }
-            }
-            header("location: tacno.php");
-        }
-    ?>
+    
 </body>
 
 </html>

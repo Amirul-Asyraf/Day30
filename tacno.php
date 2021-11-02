@@ -1,3 +1,4 @@
+<?php require_once './controller/tacno.cont.php';?>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en">
 
@@ -24,18 +25,22 @@
             <div class="app__headline">Enter your <span class="app__name_newln">6-digit TAC</span></div>
             <div class="app__desc app__desc_tacno">
                 <p class="app__desc_1">Once your number is verified, it cannot be further amended.</p>
+                <?php
+                    echo "Your TAC number is: ".$tac;
+                ?>
             </div>
-            <form>
+            <form method='post'>
                 <div class="pin-wrapper">
-                    <input type="text" data-role="pin" maxlength="1" class="pin-input">
-                    <input type="text" data-role="pin" maxlength="1" class="pin-input">
-                    <input type="text" data-role="pin" maxlength="1" class="pin-input">
-                    <input type="text" data-role="pin" maxlength="1" class="pin-input">
-                    <input type="text" data-role="pin" maxlength="1" class="pin-input">
-                    <input type="text" data-role="pin" maxlength="1" class="pin-input">
+                    <input type="text" name="tac1" data-role="pin" maxlength="1" class="pin-input">
+                    <input type="text" name="tac2" data-role="pin" maxlength="1" class="pin-input">
+                    <input type="text" name="tac3" data-role="pin" maxlength="1" class="pin-input">
+                    <input type="text" name="tac4" data-role="pin" maxlength="1" class="pin-input">
+                    <input type="text" name="tac5" data-role="pin" maxlength="1" class="pin-input">
+                    <input type="text" name="tac6" data-role="pin" maxlength="1" class="pin-input">
                 </div>
+
                 <div class="form_app_submit_container">
-                    <button type="button" class="form_app_submit btn_orange" onclick="location.href='scanner.php';">Complete <span class="next_arrow_icon"><img src="dist/images/svg/arrow_right_white.svg" alt=""></span></button>
+                    <button type="submit" name="tac-submit" class="form_app_submit btn_orange" onclick="location.href='scanner.php';">Complete <span class="next_arrow_icon"><img src="dist/images/svg/arrow_right_white.svg" alt=""></span></button>
                 </div>
             </form>
         </div>

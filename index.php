@@ -30,21 +30,7 @@
                 </div>
 
                 <?php
-                    if(isset($_POST['next'])) {
-                        $name = $_POST['name'];
-                
-                        $sql = "INSERT INTO customers(name, status, date_created) VALUES ('$name', '1', NOW()) ";
-
-                        if ($name != null) {
-                            if ($conn->query($sql) === TRUE) {
-                                // echo "New record created successfully";
-                                $_SESSION['name'] = $name;
-                            } else {
-                                echo "Error: " . $sql . "<br>" . $conn->error;
-                            }
-                        }
-                        header("location: mobileno.php");
-                    }
+                    require './controller/customers.cont.php';
                 ?>
                 
                 <div class="form_app_submit_container">
